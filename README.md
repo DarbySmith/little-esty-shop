@@ -40,7 +40,7 @@
 <!-- GETTING STARTED -->
 ## Getting Started
 
-[https://cryptic-bastion-43446.herokuapp.com/](https://cryptic-bastion-43446.herokuapp.com/)
+[Little Esty Shop URL](https://cryptic-bastion-43446.herokuapp.com/)
 
 <!-- Relationships -->
 ## Relationships
