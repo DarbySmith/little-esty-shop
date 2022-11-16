@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   
   # merchants
   get '/merchants/:merchant_id/dashboard', to: 'merchants#show'
-  patch 'merchants/:merchant_id/items/:id', to: 'items#update'
+  patch '/merchants/:merchant_id/items/:id', to: 'items#update'
 
   resources :merchants, only: [] do
     resources :items, only: [:index, :show, :edit, :new, :create]
