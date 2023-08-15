@@ -14,12 +14,12 @@ RSpec.describe 'bulk discounts index page of merchant' do
     @discount_3 = BulkDiscount.create!(percentage: 10, quantity_threshold: 2, merchant_id: @merchant_2.id)
 
     @customer1 = Customer.create!(first_name: 'Peter', last_name: 'Parker')
-    @customer2 = Customer.create!(first_name: 'Clark', last_name: 'Kent') 
-    @customer3 = Customer.create!(first_name: 'Louis', last_name: 'Lane') 
-    @customer4 = Customer.create!(first_name: 'Lex', last_name: 'Luther') 
-    @customer5 = Customer.create!(first_name: 'Frank', last_name: 'Castle') 
-    @customer6 = Customer.create!(first_name: 'Matt', last_name: 'Murdock') 
-    @customer7 = Customer.create!(first_name: 'Bruce', last_name: 'Wayne') 
+    @customer2 = Customer.create!(first_name: 'Clark', last_name: 'Kent')
+    @customer3 = Customer.create!(first_name: 'Louis', last_name: 'Lane')
+    @customer4 = Customer.create!(first_name: 'Lex', last_name: 'Luther')
+    @customer5 = Customer.create!(first_name: 'Frank', last_name: 'Castle')
+    @customer6 = Customer.create!(first_name: 'Matt', last_name: 'Murdock')
+    @customer7 = Customer.create!(first_name: 'Bruce', last_name: 'Wayne')
 
     @invoice1 = Invoice.create!(status: 'completed', customer_id: @customer1.id, created_at: Time.parse('21.01.28')) # marvel
     @invoice2 = Invoice.create!(status: 'completed', customer_id: @customer2.id, created_at: Time.parse('22.08.22')) # marvel
@@ -98,31 +98,31 @@ RSpec.describe 'bulk discounts index page of merchant' do
   it 'can create a new bulk discount' do
     visit "/merchants/#{@merchant_1.id}/bulk_discounts"
 
-    click_on "Create New Discount"
+    click_on 'Create New Discount'
 
     expect(current_path).to eq("/merchants/#{@merchant_1.id}/bulk_discounts/new")
 
     fill_in :percentage, with: 10
     fill_in :quantity_threshold, with: 3
 
-    click_on "Create Discount"
-    
+    click_on 'Create Discount'
+
     expect(current_path).to eq("/merchants/#{@merchant_1.id}/bulk_discounts")
-    
-    within("#discounts") do
-      expect(page).to have_content("Percentage: 10.0%")
-      expect(page).to have_content("Threshold: 3")
+
+    within('#discounts') do
+      expect(page).to have_content('Percentage: 10.0%')
+      expect(page).to have_content('Threshold: 3')
     end
   end
 
   it 'displays a flash message if the field are filled in incorrectly' do
     visit new_merchant_bulk_discount_path(@merchant_1)
 
-    fill_in :percentage, with: ""
-    fill_in :quantity_threshold, with: ""
+    fill_in :percentage, with: ''
+    fill_in :quantity_threshold, with: ''
 
-    click_on "Create Discount"
+    click_on 'Create Discount'
 
-    expect(page).to have_content("Error! Please enter a valid discount.")
+    expect(page).to have_content('Error! Please enter a valid discount.')
   end
 end

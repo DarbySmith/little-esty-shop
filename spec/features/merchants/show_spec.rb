@@ -57,7 +57,7 @@ RSpec.describe 'Merchants Dashboard Page' do
 
       expect(current_path).to eq("/merchants/#{@merchant1.id}/dashboard")
       expect(page).to have_content('Marvel')
-      expect(page).to_not have_content('D.C.')
+      expect(page).not_to have_content('D.C.')
     end
 
     it 'sees a link to my merchant items index' do
@@ -113,7 +113,7 @@ RSpec.describe 'Merchants Dashboard Page' do
           expect(page).to have_content(@invoice4.id)
           expect(page).to have_content(@invoice5.id)
           expect(page).to have_content(@invoice6.id)
-          expect(page).to_not have_content(@invoice2.id)
+          expect(page).not_to have_content(@invoice2.id)
           expect(page).to have_link(@invoice1.id.to_s)
           expect(page).to have_link(@invoice3.id.to_s)
           expect(page).to have_link(@invoice4.id.to_s)

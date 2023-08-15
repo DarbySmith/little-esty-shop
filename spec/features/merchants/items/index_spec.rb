@@ -87,7 +87,7 @@ RSpec.describe 'Merchant Items Index Page' do
         expect(page).to have_content("#{@merchant1.name} Inventory")
 
         expect(page).to have_content('Items:')
-        expect(page).to_not have_content('Bat-A-Rangs')
+        expect(page).not_to have_content('Bat-A-Rangs')
 
         within("#item-#{@item1.id}") do
           expect(page).to have_content(@item1.name)
@@ -127,13 +127,13 @@ RSpec.describe 'Merchant Items Index Page' do
         within("#item-#{@item3.id}") do
           expect(page).to have_content('Status: enabled')
           expect(page).to have_button('Disable')
-          expect(page).to_not have_content('Status: disabled')
+          expect(page).not_to have_content('Status: disabled')
           click_button('Disable')
           expect(page).to have_content('Status: disabled')
         end
 
         within("#item-#{@item1.id}") do
-          expect(page).to_not have_content('Status: enabled')
+          expect(page).not_to have_content('Status: enabled')
         end
       end
 
@@ -145,14 +145,14 @@ RSpec.describe 'Merchant Items Index Page' do
         within('#enabled') do
           expect(page).to have_content('Enabled Items')
           expect(page).to have_link("#{item4.name}")
-          expect(page).to_not have_link("#{@item1.name}")
+          expect(page).not_to have_link("#{@item1.name}")
         end
 
         within('#disabled') do
           expect(page).to have_content('Disabled Items')
           expect(page).to have_link("#{@item1.name}")
           expect(page).to have_link("#{@item3.name}")
-          expect(page).to_not have_link("#{item4.name}")
+          expect(page).not_to have_link("#{item4.name}")
         end
       end
 
@@ -175,7 +175,7 @@ RSpec.describe 'Merchant Items Index Page' do
 
       it 'has links to each merchant item show page and total revenue generated next to each item' do
         visit "/merchants/#{@merchant1.id}/items"
-        # save_and_open_page
+
         within('#top_by_revenue') do
           expect(page).to have_link("#{@item7.name}")
           expect(page).to have_link("#{@item4.name}")
@@ -193,7 +193,6 @@ RSpec.describe 'Merchant Items Index Page' do
 
       it 'has the 5 most popular items with date of most sales for each item' do
         visit "/merchants/#{@merchant1.id}/items"
-        # save_and_open_page
 
         within('#top_by_revenue') do
           expect(page).to have_content("Top selling date was: #{@item7.top_item_selling_date}")

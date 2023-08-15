@@ -14,12 +14,12 @@ RSpec.describe 'bulk discounts index page of merchant' do
     @discount_3 = BulkDiscount.create!(percentage: 10, quantity_threshold: 2, merchant_id: @merchant_2.id)
 
     @customer1 = Customer.create!(first_name: 'Peter', last_name: 'Parker')
-    @customer2 = Customer.create!(first_name: 'Clark', last_name: 'Kent') 
-    @customer3 = Customer.create!(first_name: 'Louis', last_name: 'Lane') 
-    @customer4 = Customer.create!(first_name: 'Lex', last_name: 'Luther') 
-    @customer5 = Customer.create!(first_name: 'Frank', last_name: 'Castle') 
-    @customer6 = Customer.create!(first_name: 'Matt', last_name: 'Murdock') 
-    @customer7 = Customer.create!(first_name: 'Bruce', last_name: 'Wayne') 
+    @customer2 = Customer.create!(first_name: 'Clark', last_name: 'Kent')
+    @customer3 = Customer.create!(first_name: 'Louis', last_name: 'Lane')
+    @customer4 = Customer.create!(first_name: 'Lex', last_name: 'Luther')
+    @customer5 = Customer.create!(first_name: 'Frank', last_name: 'Castle')
+    @customer6 = Customer.create!(first_name: 'Matt', last_name: 'Murdock')
+    @customer7 = Customer.create!(first_name: 'Bruce', last_name: 'Wayne')
 
     @invoice1 = Invoice.create!(status: 'completed', customer_id: @customer1.id, created_at: Time.parse('21.01.28')) # marvel
     @invoice2 = Invoice.create!(status: 'completed', customer_id: @customer2.id, created_at: Time.parse('22.08.22')) # marvel
@@ -95,32 +95,32 @@ RSpec.describe 'bulk discounts index page of merchant' do
     @transaction14 = Transaction.create!(credit_card_number: '4636896899845752', credit_card_expiration_date: nil, result: 'success', invoice_id: @invoice11.id)
   end
 
-  it ' has link to see all discounts for merchant on merchant show page' do
+  it 'has link to see all discounts for merchant on merchant show page' do
     visit "/merchants/#{@merchant_1.id}/dashboard"
 
-    expect(page).to have_link("View All Bulk Discounts")
+    expect(page).to have_link('View All Bulk Discounts')
 
-    click_on "View All Bulk Discounts"
+    click_on 'View All Bulk Discounts'
 
     expect(current_path).to eq("/merchants/#{@merchant_1.id}/bulk_discounts")
 
-    within("#discounts") do
+    within('#discounts') do
       expect(page).to have_content("Percentage: #{@discount_1.percentage}")
       expect(page).to have_content("Threshold: #{@discount_1.quantity_threshold}")
       expect(page).to have_content("Percentage: #{@discount_2.percentage}")
       expect(page).to have_content("Threshold: #{@discount_2.quantity_threshold}")
-      expect(page).to_not have_content("Percentage: #{@discount_3.percentage}")
-      expect(page).to_not have_content("Threshold: #{@discount_3.quantity_threshold}")
+      expect(page).not_to have_content("Percentage: #{@discount_3.percentage}")
+      expect(page).not_to have_content("Threshold: #{@discount_3.quantity_threshold}")
     end
   end
 
   it 'has links to each discounts show page' do
     visit "/merchants/#{@merchant_1.id}/bulk_discounts"
 
-    within("#discounts") do
+    within('#discounts') do
       expect(page).to have_link("#{@discount_1.id}")
       expect(page).to have_link("#{@discount_2.id}")
-      expect(page).to_not have_link("#{@discount_3.id}")
+      expect(page).not_to have_link("#{@discount_3.id}")
 
       click_on "#{@discount_1.id}"
 
@@ -131,30 +131,30 @@ RSpec.describe 'bulk discounts index page of merchant' do
   it 'has a button to delete a discount for that merchant' do
     visit merchant_bulk_discounts_path(@merchant_1)
 
-    within("#discounts") do
+    within('#discounts') do
       expect(page).to have_button("Delete Discount: #{@discount_1.id}")
       expect(page).to have_button("Delete Discount: #{@discount_2.id}")
-      expect(page).to_not have_button("Delete Discount: #{@discount_3.id}")
+      expect(page).not_to have_button("Delete Discount: #{@discount_3.id}")
 
       click_on "Delete Discount: #{@discount_1.id}"
     end
 
     expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_1))
 
-    within("#discounts") do
-      expect(page).to_not have_content("Percentage: #{@discount_1.percentage}")
-      expect(page).to_not have_content("Threshold: #{@discount_1.quantity_threshold}")  
-      expect(page).to_not have_button("Delete Discount: #{@discount_1.id}")
+    within('#discounts') do
+      expect(page).not_to have_content("Percentage: #{@discount_1.percentage}")
+      expect(page).not_to have_content("Threshold: #{@discount_1.quantity_threshold}")
+      expect(page).not_to have_button("Delete Discount: #{@discount_1.id}")
       expect(page).to have_content("Percentage: #{@discount_2.percentage}")
       expect(page).to have_content("Threshold: #{@discount_2.quantity_threshold}")
       expect(page).to have_button("Delete Discount: #{@discount_2.id}")
-      expect(page).to_not have_button("Delete Discount: #{@discount_3.id}")
+      expect(page).not_to have_button("Delete Discount: #{@discount_3.id}")
     end
   end
 
   it 'has a link to create a new discount' do
     visit "/merchants/#{@merchant_1.id}/bulk_discounts"
 
-    expect(page).to have_link("Create New Discount")
+    expect(page).to have_link('Create New Discount')
   end
 end

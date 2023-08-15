@@ -14,12 +14,12 @@ RSpec.describe 'bulk discounts index page of merchant' do
     @discount_3 = BulkDiscount.create!(percentage: 10, quantity_threshold: 2, merchant_id: @merchant_2.id)
 
     @customer1 = Customer.create!(first_name: 'Peter', last_name: 'Parker')
-    @customer2 = Customer.create!(first_name: 'Clark', last_name: 'Kent') 
-    @customer3 = Customer.create!(first_name: 'Louis', last_name: 'Lane') 
-    @customer4 = Customer.create!(first_name: 'Lex', last_name: 'Luther') 
-    @customer5 = Customer.create!(first_name: 'Frank', last_name: 'Castle') 
-    @customer6 = Customer.create!(first_name: 'Matt', last_name: 'Murdock') 
-    @customer7 = Customer.create!(first_name: 'Bruce', last_name: 'Wayne') 
+    @customer2 = Customer.create!(first_name: 'Clark', last_name: 'Kent')
+    @customer3 = Customer.create!(first_name: 'Louis', last_name: 'Lane')
+    @customer4 = Customer.create!(first_name: 'Lex', last_name: 'Luther')
+    @customer5 = Customer.create!(first_name: 'Frank', last_name: 'Castle')
+    @customer6 = Customer.create!(first_name: 'Matt', last_name: 'Murdock')
+    @customer7 = Customer.create!(first_name: 'Bruce', last_name: 'Wayne')
 
     @invoice1 = Invoice.create!(status: 'completed', customer_id: @customer1.id, created_at: Time.parse('21.01.28')) # marvel
     @invoice2 = Invoice.create!(status: 'completed', customer_id: @customer2.id, created_at: Time.parse('22.08.22')) # marvel
@@ -94,8 +94,6 @@ RSpec.describe 'bulk discounts index page of merchant' do
     @transaction13 = Transaction.create!(credit_card_number: '4636896899878732', credit_card_expiration_date: nil, result: 'success', invoice_id: @invoice10.id)
     @transaction14 = Transaction.create!(credit_card_number: '4636896899845752', credit_card_expiration_date: nil, result: 'success', invoice_id: @invoice11.id)
   end
-
-
 
   it 'shows the bulk discount percentage and quantity threshold' do
     visit merchant_bulk_discount_path(@merchant_1, @discount_1)

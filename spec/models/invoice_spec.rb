@@ -1,19 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Invoice, type: :model do
-  describe 'relationships' do
-    it { should belong_to :customer }
-    it { should have_many :invoice_items }
-    it { should have_many :transactions }
-    it { should have_many(:items).through(:invoice_items) }
-    it { should have_many(:merchants).through(:items) }
-  end
-
-  describe 'validations' do
-    it { should validate_presence_of :status }
-    it { should validate_presence_of :customer_id }
-  end
-
+RSpec.describe Invoice do
   before :each do
     @customer_1 = Customer.create!(first_name: 'Eli', last_name: 'Fuchsman')
     @customer_2 = Customer.create!(first_name: 'Bryan', last_name: 'Keener')
@@ -51,6 +38,19 @@ RSpec.describe Invoice, type: :model do
     @transaction_8 = Transaction.create!(credit_card_number: '5', result: 0, invoice_id: @invoice_8.id)
   end
 
+  describe 'relationships' do
+    it { should belong_to :customer }
+    it { should have_many :invoice_items }
+    it { should have_many :transactions }
+    it { should have_many(:items).through(:invoice_items) }
+    it { should have_many(:merchants).through(:items) }
+  end
+
+  describe 'validations' do
+    it { should validate_presence_of :status }
+    it { should validate_presence_of :customer_id }
+  end
+
   describe 'class methods' do
     describe '#incomplete_invoices' do
       it 'returns all invoices that have items that have not been shipped' do
@@ -63,26 +63,26 @@ RSpec.describe Invoice, type: :model do
     before(:each) do
       @merchant_1 = Merchant.create!(name: 'Marvel', status: 'enabled')
       @merchant_2 = Merchant.create!(name: 'D.C.', status: 'disabled')
-      
+
       @discount_1 = BulkDiscount.create!(percentage: 15, quantity_threshold: 5, merchant_id: @merchant_1.id)
       @discount_2 = BulkDiscount.create!(percentage: 20, quantity_threshold: 10, merchant_id: @merchant_1.id)
       @discount_3 = BulkDiscount.create!(percentage: 10, quantity_threshold: 2, merchant_id: @merchant_2.id)
-      
+
       @customer1 = Customer.create!(first_name: 'Peter', last_name: 'Parker')
-      @customer2 = Customer.create!(first_name: 'Clark', last_name: 'Kent') 
-      
+      @customer2 = Customer.create!(first_name: 'Clark', last_name: 'Kent')
+
       @invoice1 = Invoice.create!(status: 'completed', customer_id: @customer1.id, created_at: Time.parse('21.01.28'))
       @invoice2 = Invoice.create!(status: 'completed', customer_id: @customer2.id, created_at: Time.parse('22.08.22'))
-      
+
       @item1 = Item.create!(name: 'Beanie Babies', description: 'Investments', unit_price: 100, merchant_id: @merchant_1.id)
       @item2 = Item.create!(name: 'Bat-A-Rangs', description: 'Weapons', unit_price: 500, merchant_id: @merchant_2.id)
-      
+
       InvoiceItem.create!(quantity: 5, unit_price: 500, status: 'packaged', item_id: @item1.id, invoice_id: @invoice1.id)
       InvoiceItem.create!(quantity: 1, unit_price: 100, status: 'shipped', item_id: @item1.id, invoice_id: @invoice2.id)
-      
+
       InvoiceItem.create!(quantity: 50, unit_price: 5000, status: 'shipped', item_id: @item2.id, invoice_id: @invoice1.id)
       InvoiceItem.create!(quantity: 15, unit_price: 1500, status: 'shipped', item_id: @item2.id, invoice_id: @invoice2.id)
-      
+
       @transaction1 = Transaction.create!(credit_card_number: '4801647818676136', credit_card_expiration_date: nil, result: 'failed', invoice_id: @invoice1.id)
       @transaction2 = Transaction.create!(credit_card_number: '4654405418249632', credit_card_expiration_date: nil, result: 'success', invoice_id: @invoice1.id)
       @transaction3 = Transaction.create!(credit_card_number: '4800749911485986', credit_card_expiration_date: nil, result: 'success', invoice_id: @invoice2.id)
@@ -93,7 +93,7 @@ RSpec.describe Invoice, type: :model do
         expect(@invoice1.all_revenue).to eq(252500)
       end
     end
-    
+
     describe '#total_revenue' do
       it 'totals revenue from all invoice items' do
         expect(@invoice1.total_revenue(@merchant_1)).to eq(2500)
@@ -117,7 +117,7 @@ RSpec.describe Invoice, type: :model do
         expect(@invoice1.invoice_items_discount).to eq(25375)
       end
     end
-    
+
     describe '#all_merchants_discounts_revenue' do
       it 'returns the discounted reveune with all merchants discounts' do
         expect(@invoice1.all_merchants_discounts_revenue).to eq(227125)

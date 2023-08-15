@@ -1,18 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Customer, type: :model do
-  describe 'relationships' do
-    it { should have_many :invoices }
-    it { should have_many(:transactions).through(:invoices) }
-    it { should have_many(:merchants).through(:invoices) }
-    it { should have_many(:items).through(:invoices) }
-  end
-
-  describe 'validations' do
-    it { should validate_presence_of :first_name }
-    it { should validate_presence_of :last_name }
-  end
-
+RSpec.describe Customer do
   before :each do
     @merchant1 = Merchant.create!(name: 'Marvel')
     @merchant2 = Merchant.create!(name: 'D.C.')
@@ -61,6 +49,18 @@ RSpec.describe Customer, type: :model do
     @transaction12 = Transaction.create!(credit_card_number: '4636896899878732', credit_card_expiration_date: nil, result: 'success', invoice_id: @invoice9.id)
     @transaction13 = Transaction.create!(credit_card_number: '4636896899878732', credit_card_expiration_date: nil, result: 'success', invoice_id: @invoice10.id)
     @transaction14 = Transaction.create!(credit_card_number: '4636896899845752', credit_card_expiration_date: nil, result: 'success', invoice_id: @invoice11.id)
+  end
+
+  describe 'relationships' do
+    it { should have_many :invoices }
+    it { should have_many(:transactions).through(:invoices) }
+    it { should have_many(:merchants).through(:invoices) }
+    it { should have_many(:items).through(:invoices) }
+  end
+
+  describe 'validations' do
+    it { should validate_presence_of :first_name }
+    it { should validate_presence_of :last_name }
   end
 
   describe 'class methods' do

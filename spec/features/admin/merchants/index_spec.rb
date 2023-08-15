@@ -90,6 +90,7 @@ RSpec.describe 'admin/merchants index page' do
     @transaction13 = Transaction.create!(credit_card_number: '4636896899878732', credit_card_expiration_date: nil, result: 'success', invoice_id: @invoice10.id)
     @transaction14 = Transaction.create!(credit_card_number: '4636896899845752', credit_card_expiration_date: nil, result: 'success', invoice_id: @invoice11.id)
   end
+
   describe 'when i visit the merchant index I see a name for each merchant' do
     it 'shows the name of each merchant' do
       visit '/admin/merchants'
@@ -126,26 +127,26 @@ RSpec.describe 'admin/merchants index page' do
 
       within("#merchant-#{@merchant_1.id}") do
         expect(page).to have_content(@merchant_1.name)
-        expect(page).to_not have_button('Enable')
+        expect(page).not_to have_button('Enable')
         expect(page).to have_button('Disable')
       end
 
       within("#merchant-#{@merchant_2.id}") do
         expect(page).to have_content(@merchant_2.name)
         expect(page).to have_button('Enable')
-        expect(page).to_not have_button('Disable')
+        expect(page).not_to have_button('Disable')
       end
 
       within("#merchant-#{@merchant_3.id}") do
         expect(page).to have_content(@merchant_3.name)
-        expect(page).to_not have_button('Enable')
+        expect(page).not_to have_button('Enable')
         expect(page).to have_button('Disable')
       end
 
       within("#merchant-#{@merchant_4.id}") do
         expect(page).to have_content(@merchant_4.name)
         expect(page).to have_button('Enable')
-        expect(page).to_not have_button('Disable')
+        expect(page).not_to have_button('Disable')
       end
     end
 
@@ -154,31 +155,31 @@ RSpec.describe 'admin/merchants index page' do
 
       within("#merchant-#{@merchant_1.id}") do
         expect(page).to have_content(@merchant_1.name)
-        expect(page).to_not have_button('Enable')
+        expect(page).not_to have_button('Enable')
         expect(page).to have_button('Disable')
 
         click_button 'Disable'
         expect(current_path).to eq('/admin/merchants')
         expect(page).to have_button('Enable')
-        expect(page).to_not have_button('Disable')
+        expect(page).not_to have_button('Disable')
       end
 
       within("#merchant-#{@merchant_2.id}") do
         expect(page).to have_content(@merchant_2.name)
         expect(page).to have_button('Enable')
-        expect(page).to_not have_button('Disable')
+        expect(page).not_to have_button('Disable')
       end
 
       within("#merchant-#{@merchant_3.id}") do
         expect(page).to have_content(@merchant_3.name)
-        expect(page).to_not have_button('Enable')
+        expect(page).not_to have_button('Enable')
         expect(page).to have_button('Disable')
       end
 
       within("#merchant-#{@merchant_4.id}") do
         expect(page).to have_content(@merchant_4.name)
         expect(page).to have_button('Enable')
-        expect(page).to_not have_button('Disable')
+        expect(page).not_to have_button('Disable')
       end
     end
 
@@ -187,31 +188,31 @@ RSpec.describe 'admin/merchants index page' do
 
       within("#merchant-#{@merchant_1.id}") do
         expect(page).to have_content(@merchant_1.name)
-        expect(page).to_not have_button('Enable')
+        expect(page).not_to have_button('Enable')
         expect(page).to have_button('Disable')
       end
 
       within("#merchant-#{@merchant_2.id}") do
         expect(page).to have_content(@merchant_2.name)
         expect(page).to have_button('Enable')
-        expect(page).to_not have_button('Disable')
+        expect(page).not_to have_button('Disable')
 
         click_button 'Enable'
         expect(current_path).to eq('/admin/merchants')
-        expect(page).to_not have_button('Enable')
+        expect(page).not_to have_button('Enable')
         expect(page).to have_button('Disable')
       end
 
       within("#merchant-#{@merchant_3.id}") do
         expect(page).to have_content(@merchant_3.name)
-        expect(page).to_not have_button('Enable')
+        expect(page).not_to have_button('Enable')
         expect(page).to have_button('Disable')
       end
 
       within("#merchant-#{@merchant_4.id}") do
         expect(page).to have_content(@merchant_4.name)
         expect(page).to have_button('Enable')
-        expect(page).to_not have_button('Disable')
+        expect(page).not_to have_button('Disable')
       end
     end
   end
@@ -225,7 +226,7 @@ RSpec.describe 'admin/merchants index page' do
         expect("#{@merchant_1.name}").to appear_before("#{@merchant_5.name}")
         expect("#{@merchant_5.name}").to appear_before("#{@merchant_3.name}")
         expect("#{@merchant_3.name}").to appear_before("#{@merchant_6.name}")
-        expect(page).to_not have_content(@merchant_4)
+        expect(page).not_to have_content(@merchant_4)
       end
     end
 
@@ -238,7 +239,7 @@ RSpec.describe 'admin/merchants index page' do
         expect(page).to have_link(@merchant_3.name)
         expect(page).to have_link(@merchant_5.name)
         expect(page).to have_link(@merchant_6.name)
-        expect(page).to_not have_link(@merchant_4.name)
+        expect(page).not_to have_link(@merchant_4.name)
       end
     end
 

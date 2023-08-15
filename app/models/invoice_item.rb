@@ -4,7 +4,7 @@ class InvoiceItem < ApplicationRecord
   has_one :merchant, through: :item
   has_many :bulk_discounts, through: :merchant
 
-  validates_presence_of :quantity, :unit_price, :status, :item_id, :invoice_id
+  validates :quantity, :unit_price, :status, presence: true
 
   enum status: { pending: 0, packaged: 1, shipped: 2 }
 
@@ -18,8 +18,8 @@ class InvoiceItem < ApplicationRecord
 
   def has_discount?
     discounts = bulk_discounts
-      .joins(:invoice_items)
-      .where("invoice_items.quantity >= bulk_discounts.quantity_threshold AND invoice_items.id = #{id}")
-      !discounts.empty?
+                .joins(:invoice_items)
+                .where("invoice_items.quantity >= bulk_discounts.quantity_threshold AND invoice_items.id = #{id}")
+    !discounts.empty?
   end
 end

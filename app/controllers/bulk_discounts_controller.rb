@@ -12,6 +12,10 @@ class BulkDiscountsController < ApplicationController
     @merchant = Merchant.find(params[:merchant_id])
   end
 
+  def edit
+    @discount = BulkDiscount.find(params[:id])
+  end
+
   def create
     merchant = Merchant.find(params[:merchant_id])
     discount = merchant.bulk_discounts.new(bulk_discount_params)
@@ -19,18 +23,8 @@ class BulkDiscountsController < ApplicationController
       redirect_to merchant_bulk_discounts_path(merchant)
     else
       redirect_to new_merchant_bulk_discount_path(merchant)
-      flash[:alert] = "Error! Please enter a valid discount."
+      flash[:alert] = 'Error! Please enter a valid discount.'
     end
-  end
-
-  def destroy
-    discount = BulkDiscount.find(params[:id])
-    discount.destroy
-    redirect_to merchant_bulk_discounts_path(discount.merchant)
-  end
-
-  def edit
-    @discount = BulkDiscount.find(params[:id])
   end
 
   def update
@@ -39,8 +33,14 @@ class BulkDiscountsController < ApplicationController
       redirect_to merchant_bulk_discount_path(discount.merchant, discount)
     else
       redirect_to edit_merchant_bulk_discount_path(discount.merchant, discount)
-      flash[:alert] = "Error! Please update fields with content"
+      flash[:alert] = 'Error! Please update fields with content'
     end
+  end
+
+  def destroy
+    discount = BulkDiscount.find(params[:id])
+    discount.destroy
+    redirect_to merchant_bulk_discounts_path(discount.merchant)
   end
 
   private

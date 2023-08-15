@@ -4,8 +4,8 @@ class Item < ApplicationRecord
   has_many :invoices, through: :invoice_items
   has_many :customers, through: :invoices
 
-  validates_presence_of :name, :description, :unit_price, :merchant_id
-  validates_numericality_of :unit_price, greater_than: 0
+  validates :name, :description, :unit_price, presence: true
+  validates :unit_price, numericality: { greater_than: 0 }
 
   enum status: { disabled: 0, enabled: 1 }
 

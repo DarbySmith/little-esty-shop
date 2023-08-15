@@ -10,25 +10,13 @@ class ItemsController < ApplicationController
     @item = @merchant.items.find(params[:id])
   end
 
+  def new
+    @merchant = Merchant.find(params[:merchant_id])
+  end
+
   def edit
     @merchant = Merchant.find(params[:merchant_id])
     @item = @merchant.items.find(params[:id])
-  end
-
-  def update
-    @merchant = Merchant.find(params[:merchant_id])
-    @item = @merchant.items.find(params[:id])
-    if @item.update(item_params)
-      redirect_to "/merchants/#{@merchant.id}/items/#{@item.id}"
-      flash[:message] = 'Information successfully updated'
-    else
-      redirect_to "/merchants/#{@merchant.id}/items/#{@item.id}/edit"
-      flash[:error] = 'Required content missing or unit price is invalid'
-    end
-  end
-
-  def new
-    @merchant = Merchant.find(params[:merchant_id])
   end
 
   def create
@@ -42,6 +30,18 @@ class ItemsController < ApplicationController
     else
       flash[:error] = 'Required content missing or unit price is invalid'
       redirect_to "/merchants/#{@merchant.id}/items/new"
+    end
+  end
+
+  def update
+    @merchant = Merchant.find(params[:merchant_id])
+    @item = @merchant.items.find(params[:id])
+    if @item.update(item_params)
+      redirect_to "/merchants/#{@merchant.id}/items/#{@item.id}"
+      flash[:message] = 'Information successfully updated'
+    else
+      redirect_to "/merchants/#{@merchant.id}/items/#{@item.id}/edit"
+      flash[:error] = 'Required content missing or unit price is invalid'
     end
   end
 

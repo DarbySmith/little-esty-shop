@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Merchant, type: :model do
+RSpec.describe Merchant do
   describe 'relationships' do
     it { should have_many :items }
     it { should have_many :bulk_discounts }
@@ -305,11 +305,11 @@ RSpec.describe Merchant, type: :model do
     it 'returns discounts in descending order' do
       @merchant_1 = Merchant.create!(name: 'Marvel', status: 'enabled')
       @merchant_2 = Merchant.create!(name: 'D.C.', status: 'disabled')
-      
+
       @discount_1 = BulkDiscount.create!(percentage: 15, quantity_threshold: 5, merchant_id: @merchant_1.id)
       @discount_2 = BulkDiscount.create!(percentage: 20, quantity_threshold: 10, merchant_id: @merchant_1.id)
       @discount_3 = BulkDiscount.create!(percentage: 10, quantity_threshold: 2, merchant_id: @merchant_2.id)
-      
+
       expect(@merchant_1.ordered_discounts).to eq([@discount_2, @discount_1])
     end
   end

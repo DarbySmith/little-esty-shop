@@ -42,6 +42,7 @@ RSpec.describe 'admin/invoices' do
     @transaction_7 = Transaction.create!(credit_card_number: '5', result: 0, invoice_id: @invoice_7.id)
     @transaction_8 = Transaction.create!(credit_card_number: '5', result: 0, invoice_id: @invoice_8.id)
   end
+
   it 'shows all invoice ids in the system and links to a show page' do
     visit 'admin/invoices'
 

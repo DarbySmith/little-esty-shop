@@ -17,28 +17,28 @@ RSpec.describe 'bulk discounts edit' do
   it 'has a link to edit the discount on the show page' do
     visit merchant_bulk_discount_path(@merchant_1, @discount_1)
 
-    expect(page).to have_button("Edit Discount")
+    expect(page).to have_button('Edit Discount')
 
-    click_on "Edit Discount"
+    click_on 'Edit Discount'
 
     expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant_1, @discount_1))
     fill_in :percentage, with: 12
     fill_in :quantity_threshold, with: 5
-    click_on "Update Discount"
+    click_on 'Update Discount'
 
     expect(current_path).to eq(merchant_bulk_discount_path(@merchant_1, @discount_1))
-    expect(page).to have_content("Percent Discount: 12")
-    expect(page).to_not have_content("Percent Discount: #{@discount_1.percentage}")
+    expect(page).to have_content('Percent Discount: 12')
+    expect(page).not_to have_content("Percent Discount: #{@discount_1.percentage}")
     expect(page).to have_content("Quantity Threshold: #{@discount_1.quantity_threshold}")
   end
 
   it 'displays an error message if no content is put into form' do
     visit edit_merchant_bulk_discount_path(@merchant_1, @discount_1)
 
-    fill_in :percentage, with: ""
+    fill_in :percentage, with: ''
     fill_in :quantity_threshold, with: 5
-    click_on "Update Discount"
+    click_on 'Update Discount'
 
-    expect(page).to have_content("Error! Please update fields with content")
+    expect(page).to have_content('Error! Please update fields with content')
   end
 end

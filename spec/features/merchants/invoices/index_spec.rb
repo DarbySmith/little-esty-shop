@@ -23,7 +23,7 @@ RSpec.describe 'Merchant Invoices Index page' do
         expect(@merchant1.invoices.count).to eq(1)
       end
 
-      it ' And for each invoice I see its id' do
+      it 'And for each invoice I see its id' do
         visit "/merchants/#{@merchant1.id}/invoices"
 
         within('#invoice_ids') do
