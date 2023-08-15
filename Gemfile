@@ -3,64 +3,47 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.4'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+# Core Gems
+gem 'bootsnap', '>= 1.1.0', require: false # Reducing boot times
+gem 'coffee-rails', '~> 4.2' # CoffeeScript for assets and views
+gem 'httparty' # HTTP request library
+gem 'jbuilder', '~> 2.5' # JSON APIs
+gem 'pg', '>= 0.18', '< 2.0' # PostgreSQL as the database
+gem 'puma', '~> 3.11' # App server
 gem 'rails', '~> 5.2.6'
-# Use postgresql as the database for Active Record
-gem 'pg', '>= 0.18', '< 2.0'
-# Use Puma as the app server
-gem 'puma', '~> 3.11'
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'mini_racer', platforms: :ruby
+gem 'sass-rails', '~> 5.0' # SCSS for stylesheets
+gem 'turbolinks', '~> 5' # Faster web navigation
+gem 'uglifier', '>= 1.3.0' # JS compressor
 
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2'
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use ActiveStorage variant
-# gem 'mini_magick', '~> 4.8'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
-# Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
-
+# Development & Test group
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'capybara'
   gem 'launchy'
   gem 'orderly'
   gem 'pry'
+  gem 'pry-nav'
   gem 'rspec-rails', '~> 4.0.1'
   gem 'shoulda-matchers'
   gem 'simplecov'
-  gem 'pry-nav'
 end
 
+# Development group
 group :development do
-  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'listen', '>= 3.0.5', '< 3.2'
-  gem 'web-console', '>= 3.3.0'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'pry-rails'
-  gem 'spring'
+  gem 'rubocop-rails'
+  gem 'rubocop-rspec'
+  gem 'spring' # Speed up development
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'web-console', '>= 3.3.0'
 end
 
-
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+# Platform-specific gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
-gem 'httparty'
+# Uncomment below if you want to use them:
+# gem 'mini_racer', platforms: :ruby      # For ExecJS
+# gem 'redis', '~> 4.0'                   # Redis for Action Cable in production
+# gem 'bcrypt', '~> 3.1.7'                # Secure password for ActiveModel
+# gem 'mini_magick', '~> 4.8'             # ActiveStorage variant
+# gem 'capistrano-rails', group: :development # Deployment with Capistrano
